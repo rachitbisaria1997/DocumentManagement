@@ -4,13 +4,14 @@ import com.example.demo.entity.Document;
 import com.example.demo.service.DocumentService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.util.List;
 import java.util.logging.Logger;
 
 @RestController
@@ -37,34 +38,41 @@ public class DocumentController {
     }
 
     @GetMapping("/searchDocument")
-    public ResponseEntity<List<Document>> searchDocuments(
+    public ResponseEntity<Page<Document>> searchDocuments(
             @RequestParam(required = false) int id,
             @RequestParam(required = false) String author,
             @RequestParam(required = false) String type,
             @RequestParam(required = false) String keyword,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String[] sort
+            )
+            {
 
-                List<Document> result = null;
+                Sort sorting = Sort.by(Sort.Direction.fromString(sort[1]), sort[0]);
+                Pageable pageable = PageRequest.of(page, size, sorting);
+
+                Page<Document> result = null;
 
                 if(author != null){
-                    result = documentService.findByAuthor(author);
+                    result = documentService.findByAuthor(author, pageable);
                 }
 
                 if(type != null){
-                    result = documentService.findByType(type);
-                    
+                    result = documentService.findByType(type, pageable);
                 }
 
                 if(keyword != null){
-                    result = documentService.findByKeyword(keyword);
+                    result = documentService.findByKeyword(keyword, pageable);
                 }
 
                 if(id != -1){
                     result = documentService.findById(id);
                     
                 }
-             return new ResponseEntity<>(result, HttpStatus.OK);
-                
-    }
+
+                return ResponseEntity.ok(result);
+
+            }
 
 }
