@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class DocumentService {
+public class DocSelectionService {
 
     @Autowired
     DocumentRepository documentRepository;
@@ -21,15 +21,15 @@ public class DocumentService {
     }
 
     public Page<Document> findByAuthor(String author, Pageable pageable){
-        return documentRepository.findDocumentsByAuthor(author);
+        return documentRepository.findDocumentsByAuthor(author, pageable);
     }
 
     public Page<Document> findByType(String type, Pageable pageable){
-        return documentRepository.findDocumentsByType(type);
+        return documentRepository.findDocumentsByType(type, pageable);
     }
 
     public Page<Document> findByKeyword(String content, Pageable pageable){
-        return documentRepository.findDocumentsByKeyword(content);
+        return documentRepository.findDocumentsByKeyword(content, pageable);
     }
 
     public Page<Document> findById(int id){
