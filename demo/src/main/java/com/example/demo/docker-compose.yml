@@ -14,3 +14,8 @@ services:
       Spring_Datasource_url: jdbc:postgresql://localhost:5432/DocManagement
       Spring_Datasource_username: rachit1997
       Spring_Datasource_password: rachit1997
+    rabbitmq:
+      image: rabbitmq:3-management
+      container_name: doc-rabbitmq
+      ports:
+        - "5672:5672"
