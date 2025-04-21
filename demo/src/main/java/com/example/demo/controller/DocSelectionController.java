@@ -54,7 +54,7 @@ public class DocSelectionController {
                     result = docSelectionService.findById(id);
                     
                 }
-
+                logger.info("Documents have been fetched from the Database");
                 return ResponseEntity.ok(result);
 
             }
