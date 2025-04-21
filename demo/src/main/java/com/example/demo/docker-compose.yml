@@ -11,12 +11,6 @@ services:
     depends_on:
       - rabbitmq
     environment:
-      Spring_Datasource_url: jdbc:postgresql://postgres:5432/docdb
-      Spring_Datasource_username: rachit
-      Spring_Datasource_password: rachit
-    networks:
-      - docnet
-
-networks:
-  docnet:
-    driver: bridge
+      Spring_Datasource_url: jdbc:postgresql://localhost:5432/DocManagement
+      Spring_Datasource_username: rachit1997
+      Spring_Datasource_password: rachit1997
