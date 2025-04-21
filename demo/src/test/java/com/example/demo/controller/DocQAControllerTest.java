@@ -20,7 +20,7 @@ public class DocQAControllerTest {
 
     private List<Document> documents;
 
-    @Before("")
+    @Before
     void setup(){
         request = new QuestionRequest("Java");
     }

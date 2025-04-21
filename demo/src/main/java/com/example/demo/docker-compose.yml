@@ -1,0 +1,22 @@
+version: 3.8
+
+services:
+  backend:
+    build:
+      context:
+        dockerfile : dockerfile
+    container_name: document-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - rabbitmq
+    environment:
+      Spring_Datasource_url: jdbc:postgresql://postgres:5432/docdb
+      Spring_Datasource_username: rachit
+      Spring_Datasource_password: rachit
+    networks:
+      - docnet
+
+networks:
+  docnet:
+    driver: bridge

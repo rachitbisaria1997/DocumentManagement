@@ -1,0 +1,15 @@
+# Use a lightweight JDK image
+FROM openjdk:17-jdk-slim
+
+# Set working directory
+WORKDIR /app
+
+# Add the jar file (replace with your actual jar name if needed)
+Arg JAR_FILE = target/document-qa-backend.jar
+Copy ${JAR_FILE} app.jar
+
+# Expose the port used by the Spring Boot app
+Expose 8080
+
+# Run the application
+Entrypoint ["java", "-jar", "app.jar"]
