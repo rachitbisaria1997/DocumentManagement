@@ -10,6 +10,7 @@ import java.util.Date;
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Document {
 
 
@@ -24,17 +25,5 @@ public class Document {
     private Date date;
     private int price;
     private int pages;
-
-    public Document(Long id, String title, String content, String author, String summary, String type, Date date, int price, int pages) {
-        this.id = id;
-        this.title = title;
-        this.content = content;
-        this.author = author;
-        this.summary = summary;
-        this.type = type;
-        this.date = date;
-        this.price = price;
-        this.pages = pages;
-    }
 
 }

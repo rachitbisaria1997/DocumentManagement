@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.DTO.JwtResponse;
 import com.example.demo.DTO.Login;
 import com.example.demo.DTO.UserRegister;
 import com.example.demo.security.JwtProvider;
@@ -60,9 +61,8 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtProvider.generateToken(authentication);
 
-        return ResponseEntity.ok("User has been login successfully");
+        return ResponseEntity.ok(new JwtResponse(token));
 
     }
-
 
 }
