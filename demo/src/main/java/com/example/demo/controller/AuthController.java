@@ -1,6 +1,8 @@
+package com.example.demo.controller;
+
 import com.example.demo.DTO.Login;
 import com.example.demo.DTO.UserRegister;
-import com.example.demo.JwtProvider;
+import com.example.demo.security.JwtProvider;
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.management.relation.Role;
 
 @RestController
 @RequestMapping("/auth")
@@ -36,17 +36,19 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody UserRegister userRegister){
 
-        if(userRepository.findByEmail(userRegister.getEmail())){
+        User user = userRepository.findByEmail(userRegister.getEmail());
+
+        if(user != null){
             return ResponseEntity.badRequest().body("Email already exists");
         }
 
-        User user = new User();
-        user.setUsername(userRegister.getUsername());
-        user.setPassword(userRegister.getPassword());
-        user.setEmail(userRegister.getEmail());
-        user.setRole(userRegister.getRole());
+        User newUser = new User();
+        newUser.setUsername(userRegister.getUsername());
+        newUser.setPassword(userRegister.getPassword());
+        newUser.setEmail(userRegister.getEmail());
+        newUser.setRole(userRegister.getRole());
 
-        userRepository.save(user);
+        userRepository.save(newUser);
 
         return ResponseEntity.ok("User is registered successfully");
     }

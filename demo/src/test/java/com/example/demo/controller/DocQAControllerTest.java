@@ -29,7 +29,7 @@ public class DocQAControllerTest {
     void test_document_list(){
 
         documents = (List<Document>) docQAController.searchByQuestion(request);
-        assert.assertTrue(documents.size() > 1, "Documents is not fetched");
+        assert.assertTrue(documents.size() > 1, "Documents are not fetched");
     }
 
 
